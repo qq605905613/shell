@@ -1,0 +1,16 @@
+# DB configuration
+DB_NAME=opstadb
+DB_USER=op_mgmap
+DB_PASS=op_mgmap
+
+# table backup dir
+TAB_BACKUP_DIR=/home/liming/table_backup
+
+# debug flag
+IS_DEBUG=TRUE
+
+# mail list 
+MAIL_LIST="liming@umail.com;guxiaowei@umail.com"
+
+
+

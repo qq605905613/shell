@@ -1,0 +1,21 @@
+db2 drop table mmgm.tbl_mmgm_unaudit_mchnt;
+db2 drop table mmgm.tbl_mmgm_audited_mchnt;
+db2 drop table mmgm.tbl_mmgm_reject_mchnt;
+db2 drop table mmgm.tbl_mmgm_audit_task;
+db2 drop table mmgm.tbl_mmgm_mchnt_audit_info;
+db2 drop table mgmhis.tbl_mgmhis_unaudit_mchnt;
+db2 drop table mgmhis.tbl_mgmhis_audited_mchnt;
+db2 drop table mgmhis.tbl_mgmhis_reject_mchnt;
+db2 drop table mgmhis.tbl_mgmhis_audit_task;
+db2 drop table mgmhis.tbl_mgmhis_mchnt_audit_info;
+
+db2 -tvf tbl_mmgm_unaudit_mchnt.ddl.sql;
+db2 -tvf tbl_mmgm_audited_mchnt.ddl.sql;
+db2 -tvf tbl_mmgm_reject_mchnt.ddl.sql;
+db2 -tvf tbl_mmgm_audit_task.ddl.sql;
+db2 -tvf tbl_mmgm_mchnt_audit_info.ddl.sql;
+db2 -tvf tbl_mgmhis_unaudit_mchnt.ddl.sql;
+db2 -tvf tbl_mgmhis_audited_mchnt.ddl.sql;
+db2 -tvf tbl_mgmhis_reject_mchnt.ddl.sql;
+db2 -tvf tbl_mgmhis_audit_task.ddl.sql;
+db2 -tvf tbl_mgmhis_mchnt_audit_info.ddl.sql;

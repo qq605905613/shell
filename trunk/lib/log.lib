@@ -1,0 +1,10 @@
+## logger function
+
+logger() {
+    if [ $# -eq 0 ]
+    then
+        return 1
+    fi
+
+    echo [$(date "+%Y-%m-%d %H:%M:%S")] "$*" 
+}

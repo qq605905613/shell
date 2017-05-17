@@ -1,0 +1,53 @@
+## commons functions
+
+## shell home directory
+shell_home_dir() {
+    # script name
+    SCRIPT_NAME=$1
+    if [ ! -e "$SCRIPT_NAME" ] ; then
+        echo "[$SCRIPT_NAME] is not exists"
+        return 1
+    fi
+
+    # script file directory
+    SCRIPT_DIR=$(cd $(dirname $SCRIPT_NAME); pwd)
+
+    if [ -h "$SCRIPT_NAME" ] ; then
+    # script file is a symbol link
+        LINK_NAME=$(readlink "$SCRIPT_NAME");
+        if [ ${LINK_NAME:0:1} = "/" ] ; then
+            # symbol link is a absolute path
+            SCRIPT_PATH=$LINK_NAME
+        else
+            SCRIPT_PATH="${SCRIPT_DIR}/${LINK_NAME}"
+        fi
+        SCRIPT_DIR=$(cd $(dirname $SCRIPT_PATH); pwd)
+    fi
+
+    # print script home dir
+    echo "$SCRIPT_DIR"
+}
+
+
+## date_fix
+# 20130101 20130101 => 20130101
+# 20130101 20130110 => 20130101-0110
+date_fix() {
+    if [ $# -lt 2 ] ; then
+        echo "SYNTAX: date_fix <BEGIN_DATE> <END_DATE>"
+        return 1
+    fi
+
+    A_DATE=$1
+    Z_DATE=$2
+    shift 2
+
+    if [ "${A_DATE}" = "${Z_DATE}" ] ; then
+        DEL_FIX=${A_DATE}
+    else
+        DEL_FIX="${A_DATE}-${Z_DATE:4:4}"
+    fi
+
+    echo $DEL_FIX
+}
+

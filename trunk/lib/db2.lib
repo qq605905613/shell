@@ -1,0 +1,78 @@
+## database functions
+
+# connect to database
+connect_to_db() {
+    if [ $# -lt 3 ] ; then
+        echo "SYNTAX: connect_to_db <DB_NAME> <DB_USER> <DB_PWD> [force]"
+        return 1
+    fi
+    DB_NAME=$1
+    DB_USER=$2
+    DB_PWD=$3
+    shift 3
+
+    if [ "$1" != "force" ] ; then
+        return 0
+    fi
+
+    # execute connecting command
+    db2 connect to $DB_NAME user $DB_USER using $DB_PWD
+    if [ $? -ne 0 ] ; then
+        echo "ERROR: connect to database $DB_NAME failed!!!"
+        return 2
+    fi
+
+    return 0
+}
+
+## execute db2_cmd
+exec_db2_cmd() {
+    if [ $# -lt 1 ] ; then
+        echo "SYNTAX: exec_db2_cmd <DB2_CMD> [force]"
+        return 1
+    fi
+
+    SQL=$1
+    shift 1
+
+    # only print db2 commnad
+    if [ "$1" != "force" ] ; then
+        logger "$SQL"
+        return 0
+    fi
+
+    logger "[DB2_CMD: START]"
+    logger "$SQL"
+    db2 "$SQL"
+    RET=$?
+    logger "[DB2_CMD: END]"
+
+    return $RET
+}
+
+## execute sql script
+exec_sql_script() {
+    if [ $# -lt 1 ] ; then
+        echo "SYNTAX: exec_sql_script <SQL_FILE> [force]"
+        return 1
+    fi
+
+    SQL_FILE=$1
+    shift 1
+
+    # print sql content
+    logger "[${SQL_FILE}] SQL SCRIPT CONTENT"
+    cat $SQL_FILE
+
+    # only print sql
+    if [ "$1" != "force" ] ; then
+        return 0
+    fi
+
+    logger "[SQL_SCRIPT: ${SQL_FILE}] START"
+    db2 -tvf $SQL_FILE
+    RET=$?
+    logger "[SQL_SCRIPT: ${SQL_FILE}] END"
+
+    return $RET
+}
